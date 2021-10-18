@@ -1,9 +1,11 @@
-#include<cstdio>
+#include<stdio.h>
 #include<graphics.h>
 #include<dos.h>
 #include<conio.h>
-int main()
+void main()
 {
+	struct  time t;
+	struct arccoordstype sec_arc, min_arc, hr_arc;
 	int i;
 	int gd = DETECT,gm;
 	initgraph(&gd,&gm,"c://TC//BGI");
@@ -18,16 +20,16 @@ int main()
 	setcolor(WHITE);
 	//mark four points
 	line(320,160,320,165);//top
-	line(320,315,320,325)//bottom
+	line(320,315,320,325);//bottom
 	line(400,240,395,240);//left
 	line(240,240,245,240);//right
 
-	for(s=82;s<99;s++)
+	for(int s=82;s<99;s++)
 	{
 	 setcolor(YELLOW);
 	 circle(320,240,s);
 	}
-	setcolor(BLACK);
+	setcolor(WHITE);
 	line(270,153,264,140);
 	line(250,168,242,153);
 	line(227,160,284,132);
@@ -39,8 +41,8 @@ int main()
 	arc(385,144,328,155,30);
 	int x=10;
 	setfillstyle(1,x);
-	floodfill(380,130,RED);
-	floodfill(260,130,RED);
+	floodfill(380,130,WHITE);
+	floodfill(260,130,WHITE);
 	setfillstyle(1,WHITE);
 	floodfill(135,85,WHITE);
 
@@ -49,9 +51,9 @@ int main()
 	{
 		printf("Time is : %2d:%2d:%3d\r",t.ti_hour%12, t.ti_min, t.ti_sec);
 		setcolor(0);
-		line(320,240, sec_arc.x, sec_arc.y);
-		line(320,240, min_arc.x, min_arc.y);
-		line(320,240, hr_arc.x, hr_arc.y);
+		line(320,240, sec_arc.xend, sec_arc.yend);
+		line(320,240, min_arc.xend, min_arc.yend);
+		line(320,240, hr_arc.xend, hr_arc.yend);
 		//Store time into struct t
 		gettime(&t);
 		//hour
@@ -59,13 +61,13 @@ int main()
 		arc(320,240,270,90-(t.ti_hour*6*5),55);
 		setcolor(YELLOW);
 		getarccoords(&hr_arc);
-		line(320,240, hr_arc.x, hr_arc.y);
+		line(320,240, hr_arc.xend, hr_arc.yend);
 		//minute
 		setcolor(0);
 		arc(320,240,270,90-t.ti_min*6,65);
 		setcolor(CYAN);
 		getarccoords(&min_arc);
-		line(320,240, min_arc.x, min_arc.y);
+		line(320,240, min_arc.xend, min_arc.yend);
 		//center circle
 		setcolor(WHITE);
 		pieslice(320,240,0,360,5);
@@ -74,8 +76,8 @@ int main()
 		arc(320,240,270,90-t.ti_sec*6,75);
 		setcolor(RED);
 		getarccoords(&sec_arc);
-		line(320,240, sec_arc.x, sec_arc.y);
+		line(320,240, sec_arc.xend, sec_arc.yend);
 		delay(250);
 		}
-	return 0;
+	getch();
 }
